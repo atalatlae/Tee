@@ -1,2 +1,2 @@
 # tee
-Tee Proyect
+Tee Project
