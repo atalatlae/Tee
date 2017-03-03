@@ -14,7 +14,10 @@ class Application
     $className = str_replace("Chicoco\\", '', $className);
 
     if (is_file('controller/'.$className.'.php')) {
-      require_once("controller/".$className.".php");
+      require_once('controller/'.$className.'.php');
+    }
+    else if (is_file('model/'.$className.'.php')){
+      require_once('model/'.$className.'.php');
     }
     else {
       throw new Exception("Unable to load class $className.");
