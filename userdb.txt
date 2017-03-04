@@ -1,5 +1,5 @@
-boris|O:4:"User":3:{s:8:"username";s:5:"boris";s:8:"password";s:6:"123123";s:5:"roles";a:1:{i:0;s:5:"page1";}}
-felipe|O:4:"User":3:{s:8:"username";s:6:"felipe";s:8:"password";s:6:"234234";s:5:"roles";a:1:{i:0;s:5:"page2";}}
-cruchet|O:4:"User":3:{s:8:"username";s:7:"cruchet";s:8:"password";s:6:"345345";s:5:"roles";a:1:{i:0;s:5:"page3";}}
-full|O:4:"User":3:{s:8:"username";s:4:"full";s:8:"password";s:64:"96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e";s:5:"roles";a:3:{i:0;s:5:"page1";i:1;s:5:"page2";i:2;s:5:"page3";}}
-admin|O:4:"User":3:{s:8:"username";s:5:"admin";s:8:"password";s:64:"49cbe57e9503aa0c6d0cf1f88ec2b8e1dfb870c346fb9c82bc0489915108d75a";s:5:"roles";a:1:{i:0;s:5:"admin";}}
+boris|O:4:"User":3:{s:8:"username";s:5:"boris";s:8:"password";s:64:"96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e";s:5:"roles";a:1:{s:5:"page1";i:1;}}
+felipe|O:4:"User":3:{s:8:"username";s:6:"felipe";s:8:"password";s:64:"96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e";s:5:"roles";a:1:{s:5:"page2";i:1;}}
+cruchet|O:4:"User":3:{s:8:"username";s:7:"cruchet";s:8:"password";s:64:"96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e";s:5:"roles";a:1:{s:5:"page3";i:1;}}
+full|O:4:"User":3:{s:8:"username";s:4:"full";s:8:"password";s:64:"96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e";s:5:"roles";a:3:{s:5:"page1";i:1;s:5:"page2";i:1;s:5:"page3";i:1;}}
+admin|O:4:"User":3:{s:8:"username";s:5:"admin";s:8:"password";s:64:"49cbe57e9503aa0c6d0cf1f88ec2b8e1dfb870c346fb9c82bc0489915108d75a";s:5:"roles";a:1:{s:5:"admin";i:1;}}
