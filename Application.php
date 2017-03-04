@@ -26,7 +26,7 @@ class Application
 
   public function router() {
 		try {
-      $r = preg_match("|index.php/([a-zA-Z]{0,50})/?([a-zA-Z]{0,50})|", $_SERVER['PHP_SELF'], $matches);
+      $r = preg_match("|index.php/([a-zA-Z]{0,50})/?([a-zA-Z0-9]{0,50})|", $_SERVER['PHP_SELF'], $matches);
 
       $this->_controller = 'IndexController';
       $this->_action = 'IndexAction';
