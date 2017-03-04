@@ -3,10 +3,12 @@
 class DummyDb
 {
   protected $storage;
+  protected $dataFile;
 
   public function __construct() {
     $this->storage = array();
-    $this->loadData('userdb.txt');
+    $this->dataFile = 'data.txt';
+    $this->loadData();
   }
 
   public function add($key, $value) {
@@ -28,13 +30,20 @@ class DummyDb
     return count($this->storage);
   }
 
-  private function LoadData($theFile) {
-    $lines = file($theFile);
+  protected function LoadData() {
+    $lines = file($this->dataFile);
 
     foreach($lines as $l) {
       list($key, $value) = explode('|', $l);
       $obj = unserialize($value);
       $this->add($key, $obj);
     }
+  }
+
+  public function save() {
+    foreach($this->storage as $k => $v) {
+      $data[$k] = "$k|".serialize($v)."\n";
+    }
+    return file_put_contents($this->dataFile, $data);
   }
 }
