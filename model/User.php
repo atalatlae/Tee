@@ -11,4 +11,8 @@ class User
     $this->password = $password;
     $this->roles = $roles;
   }
+
+  public function hasRole($role) {
+    return isset($this->roles[$role]);
+  }
 }
