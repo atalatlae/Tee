@@ -47,7 +47,17 @@ class Application
   }
 
   public function run() {
-    $controller = new $this->_controller;
-    $controller->{$this->_action}();
+    try {
+      $controller = new $this->_controller;
+
+      if (!method_exists($controller, $this->_action)) {
+        throw new Exception('Action not exist');
+      }
+      $controller->{$this->_action}();
+    }
+    catch(Exception $e) {
+      header("HTTP/1.0 404");
+      include('view/404.phtml');
+    }
   }
 }
