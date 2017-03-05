@@ -25,10 +25,11 @@ class IndexController
       if ($userDao->exists($username)) {
         $user = $userDao->get($username);
         $hpassw = hash('sha256', $password);
+
         if ($user->password === $hpassw) {
           $session = new Session();
+          $session->refresh();
           $session->setVar('currentUser', $user);
-          $session->setVar('lastAction', time());
 
           $destination = 'index.php';
           if ($to != '') {
@@ -37,7 +38,6 @@ class IndexController
 
           header("Location: $destination");
           exit();
-
         }
         else {
           $message = "wrong user or password";
@@ -46,7 +46,6 @@ class IndexController
       else {
         $message = "wrong user or password";
       }
-
     }
 
     if ($this->currentUser instanceof User) {
@@ -105,7 +104,27 @@ class IndexController
     exit();
   }
 
+  private function expired() {
+    header("HTTP/1.0 401 SESSION EXPIRED");
+
+    $session = new Session();
+    $session->destroy();
+
+    $message = 'Session expired';
+    require_once('view/Index_Login.phtml');
+    exit();
+  }
+
   private function verifySession() {
+    $session = new Session();
+
+    if ($session->isExpired()) {
+      $this->expired();
+    }
+    else {
+      $session->refresh();
+    }
+    return true;
   }
 
   private function verifyPermissions($role = '', $to = '') {
