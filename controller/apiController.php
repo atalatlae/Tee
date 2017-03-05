@@ -21,11 +21,13 @@ class   apiController
     if ($param != '') {
       if ($this->requestIs('GET')) {
         $this->verifyPermissions();
-        $this->getUser($param);
+        $this->username = $param;
+        $this->getUser();
       }
       else if ($this->requestIs('DELETE')) {
         $this->verifyPermissions('admin');
-        $this->deleteUser($param);
+        $this->username = $param;
+        $this->deleteUser();
       }
       else if ($this->requestIs('PUT')) {
         $this->verifyPermissions('admin');
@@ -92,9 +94,9 @@ class   apiController
     $this->outputUnauthorize();
   }
 
-  private function getUser($username) {
+  private function getUser() {
     $userDao = new UserDao();
-    $user = $userDao->get($username);
+    $user = $userDao->get($this->username);
 
     if ($user instanceof User) {
       $jsonArray = array(
@@ -204,7 +206,7 @@ class   apiController
   private function deleteUser($username) {
     $userDao = new UserDao();
 
-    if (!$userDao->exists($username)) {
+    if (!$userDao->exists($this->username)) {
       $jsonArray = array(
         'result' => 'ERROR',
         'message' => 'Username does not exist'
@@ -212,7 +214,7 @@ class   apiController
       $this->outputAsJson($jsonArray, 404);
     }
 
-    $r = $userDao->delete($username);
+    $r = $userDao->delete($this->username);
 
     if ($r) {
       $jsonArray = array('result' => 'OK');
@@ -225,7 +227,7 @@ class   apiController
       );
       $httpCode = 500;
     }
-    $this->outputAsJson($jsonArray);
+    $this->outputAsJson($jsonArray, $httpCode);
   }
 
   private function getAllUsers() {
