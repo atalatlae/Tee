@@ -62,19 +62,16 @@ class   apiController
     $this->outputAsJson(array());
   }
 
-  private function outputAsJson($jsonArray) {
+  private function outputAsJson($jsonArray, $httpCode = 200) {
+    header("HTTP/1.1 $httpCode");
     header("Content-Type: application/json");
     echo json_encode($jsonArray);
     exit();
   }
 
   private function outputUnauthorize() {
-    header("HTTP/1.1 401 UNAUTHORIZED");
-    header("Content-Type: application/json");
-
     $jsonArray = array('result' => 'ERROR', 'message' => 'Unauthorized access');
-    echo json_encode($jsonArray);
-    exit();
+    $this->outputAsJson($jsonArray, 401);
   }
 
   private function verifyPermissions($role = '') {
@@ -97,18 +94,23 @@ class   apiController
 
   private function getUser($username) {
     $userDao = new UserDao();
-    $user = $userDao->getByUsername($username);
+    $user = $userDao->get($username);
 
     if ($user instanceof User) {
       $jsonArray = array(
         'username' => $user->username,
         'roles' => $user->roles
       );
+      $httpCode = 200;
     }
     else {
-      $jsonArray = array();
+      $jsonArray = array(
+        'result' => 'ERROR',
+        'message' => 'Username does not exist'
+      );
+      $httpCode = 404;
     }
-    $this->outputAsJson($jsonArray);
+    $this->outputAsJson($jsonArray, $httpCode);
   }
 
   private function createUser() {
@@ -123,7 +125,7 @@ class   apiController
         'result' => 'ERROR',
         'message' => 'data missing'
       );
-      $this->outputAsJson($jsonArray);
+      $this->outputAsJson($jsonArray, 422);
     }
 
     if ($userDao->exists($username)) {
@@ -131,7 +133,7 @@ class   apiController
         'result' => 'ERROR',
         'message' => 'User exists'
       );
-      $this->outputAsJson($jsonArray);
+      $this->outputAsJson($jsonArray, 409);
     }
 
     $password = hash('sha256', $password);
@@ -140,14 +142,16 @@ class   apiController
 
     if ($r) {
       $jsonArray = array('result' => 'OK');
+      $httpCode = 201;
     }
     else {
       $jsonArray = array(
         'result' => 'ERROR',
         'message' => 'There was an error creating the user'
       );
+      $httpCode = 500;
     }
-    $this->outputAsJson($jsonArray);
+    $this->outputAsJson($jsonArray, $httpCode);
   }
 
   private function updateUser() {
@@ -162,7 +166,7 @@ class   apiController
         'result' => 'ERROR',
         'message' => 'data missing'
       );
-      $this->outputAsJson($jsonArray);
+      $this->outputAsJson($jsonArray, 422);
     }
 
     if (!$userDao->exists($username)) {
@@ -170,7 +174,7 @@ class   apiController
         'result' => 'ERROR',
         'message' => 'User not exists'
       );
-      $this->outputAsJson($jsonArray);
+      $this->outputAsJson($jsonArray, 404);
     }
 
     $tmpRoles = array();
@@ -185,28 +189,41 @@ class   apiController
 
     if ($r) {
       $jsonArray = array('result' => 'OK');
+      $httpCode = 200;
     }
     else {
       $jsonArray = array(
         'result' => 'ERROR',
         'message' => 'There was an error updating the user'
       );
+      $httpCode = 500;
     }
-    $this->outputAsJson($jsonArray);
+    $this->outputAsJson($jsonArray, $httpCode);
   }
 
   private function deleteUser($username) {
     $userDao = new UserDao();
+
+    if (!$userDao->exists($username)) {
+      $jsonArray = array(
+        'result' => 'ERROR',
+        'message' => 'Username does not exist'
+      );
+      $this->outputAsJson($jsonArray, 404);
+    }
+
     $r = $userDao->delete($username);
 
     if ($r) {
       $jsonArray = array('result' => 'OK');
+      $httpCode = 200;
     }
     else {
       $jsonArray = array(
         'result' => 'ERROR',
         'message' => 'There was an error deleting the user'
       );
+      $httpCode = 500;
     }
     $this->outputAsJson($jsonArray);
   }
