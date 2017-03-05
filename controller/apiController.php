@@ -203,7 +203,7 @@ class   apiController
     $this->outputAsJson($jsonArray, $httpCode);
   }
 
-  private function deleteUser($username) {
+  private function deleteUser() {
     $userDao = new UserDao();
 
     if (!$userDao->exists($this->username)) {
