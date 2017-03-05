@@ -8,5 +8,7 @@ $session = new Session();
 var_dump($session);
 ?>
 --EXPECT--
-object(Session)#1 (0) {
+object(Session)#1 (1) {
+  ["maxLife":"Session":private]=>
+  int(300)
 }
