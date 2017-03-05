@@ -4,8 +4,13 @@ class Application
 {
   private $_controller;
   private $_action;
+  private $_params;
 
   public function __construct() {
+    $this->params = array();
+    $this->_controller = 'IndexController';
+    $this->_action = 'IndexAction';
+
     spl_autoload_register(array($this, "autoLoadClass"));
     $this->router();
   }
@@ -28,9 +33,6 @@ class Application
 		try {
       $r = preg_match("|index.php/([a-zA-Z]{0,50})/?([a-zA-Z0-9]{0,50})|", $_SERVER['PHP_SELF'], $matches);
 
-      $this->_controller = 'IndexController';
-      $this->_action = 'IndexAction';
-
       if ($r) {
         if (isset($matches[1]) && $matches[1] != '') {
           $this->_controller = $matches[1].'Controller';
@@ -48,7 +50,9 @@ class Application
 
   public function run() {
     try {
+      $this->parseParams();
       $controller = new $this->_controller;
+      $controller->params = $this->params;
 
       if (!method_exists($controller, $this->_action)) {
         throw new Exception('Action not exist');
@@ -58,6 +62,17 @@ class Application
     catch(Exception $e) {
       header("HTTP/1.0 404");
       include('view/404.phtml');
+    }
+  }
+
+  private function parseParams() {
+    $parts = explode('/', $_SERVER['PHP_SELF']);
+    $parts = array_filter($parts);
+
+    if (count($parts) > 3) {
+      for($i = 4; $i <= count($parts); $i++) {
+        $this->params[] = $parts[$i];
+      }
     }
   }
 }
