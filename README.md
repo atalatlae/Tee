@@ -84,7 +84,7 @@ __tee__ API use HTTP basic authentication. You can use the se users that the web
 __tee__ provide a sort of unitary tests written with [PEAR framework](https://pear.php.net/).
 
 ### Dependencies
-__tee__ tests require the use of PEAR framework. To install it, please read [the follow instructions](https://pear.php.net/manual/en/installation.php).
+__tee__ tests require the use of PEAR framework. To install it, please read [the following instructions](https://pear.php.net/manual/en/installation.php).
 
 ### Running Test
 run the __tee__ tests it's so easy. Simply go to the __tee__ root directory and run the following command
