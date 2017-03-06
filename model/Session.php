@@ -5,7 +5,9 @@ class Session
 	private $maxLife;
 
 	public function __construct($maxLife = 5) {
-		session_start();
+		if (session_status() !== PHP_SESSION_ACTIVE) {
+			session_start();
+		}
 		$this->maxLife = $maxLife * 60;
 	}
 
