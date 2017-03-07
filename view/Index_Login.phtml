@@ -16,7 +16,7 @@
     <form method="post" action="/index.php">
       Username <input type="text" name="username" value="" placeholder="username"><br>
       Password <input type="password" name="password" value="" placeholder="********"><br>
-      <input type="hidden" name="to" value="<?php echo isset($to)?to:''?>">
+      <input type="hidden" name="to" value="<?php echo isset($to)?$to:''?>">
       <input type="submit" name="send" value="Send">
     </form>
   </body>

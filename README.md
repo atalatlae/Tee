@@ -42,6 +42,14 @@ Now, you can access with your browser to http://localhost:8080 and see the login
   * Role: page1, page2, page3, admin
   * User p2 can access to Page1, Page2, Page3 and full access to the API
 
+## Access URLs
+* Page1
+  http://localhost:8080/index.php/Index/Page1
+* Page2
+  http://localhost:8080/index.php/Index/Page2
+* Page3
+  http://localhost:8080/index.php/Index/Page3
+
 ## The API
 __tee__ provided a RESTful API
 
